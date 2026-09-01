@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Library Chatbot</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">
+        📚 Library Management
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/admin/books">Books</a>
+        <a href="/admin/students">Students</a>
+        <a href="/admin/issues">Issues</a>
+        <a href="/chatbot">Chatbot</a>
+
+    </div>
+
+</div>
+
+
+<div class="chatbot-wrapper">
+
+    <div class="chatbot-header">
+
+        <h1>🤖 Library Assistant</h1>
+
+        <p>
+            Ask me anything about your library
+        </p>
+
+    </div>
+
+
+    <div class="chat-box">
+
+        <div class="message bot-message">
+
+            <strong>🤖 Library Assistant</strong>
+
+            <p style="margin-top: 8px;">
+                Hello! How can I help you today?
+            </p>
+
+            <div class="quick-questions">
+
+                <button
+                    type="button"
+                    onclick="askQuestion('Show available books')"
+                >
+                    Available Books
+                </button>
+
+                <button
+                    type="button"
+                    onclick="askQuestion('Show all books')"
+                >
+                    All Books
+                </button>
+
+                <button
+                    type="button"
+                    onclick="askQuestion('Show issued books')"
+                >
+                    Issued Books
+                </button>
+
+                <button
+                    type="button"
+                    onclick="askQuestion('Show due dates')"
+                >
+                    Due Dates
+                </button>
+
+                <button
+                    type="button"
+                    onclick="askQuestion('Show my fine')"
+                >
+                    Fine
+                </button>
+
+            </div>
+
+        </div>
+
+
+        {% if question %}
+
+        <div class="message user-message">
+
+            <strong>You</strong>
+
+            <p>
+                {{ question }}
+            </p>
+
+        </div>
+
+
+        <div class="message bot-message">
+
+            <strong>🤖 Library Assistant</strong>
+
+            <div style="margin-top: 8px; white-space: pre-line;">
+                {{ answer }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="chat-input">
+
+        <form method="POST">
+
+            <input
+                class="form-control"
+                type="text"
+                id="question"
+                name="question"
+                placeholder="Ask about books, students, due dates..."
+                required
+            >
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Send
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+
+    Library Management System © 2026
+
+</div>
+
+
+<script>
+
+function askQuestion(question) {
+
+    document.getElementById("question").value = question;
+
+    document.querySelector("form").submit();
+
+}
+
+</script>
+
+</body>
+</html>

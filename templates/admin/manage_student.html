@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Students</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">📚 Library Management</div>
+
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+            <a href="/admin/books">📚 Books</a>
+            <a href="/admin/students" class="active">👨‍🎓 Students</a>
+            <a href="/admin/add-student">➕ Add Student</a>
+            <a href="/admin/issue-book">📖 Issue Book</a>
+            <a href="/admin/issues">📋 Issues</a>
+            <a href="/chatbot">🤖 Chatbot</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Manage Students</h1>
+            </div>
+            <a href="/admin/add-student" class="add-btn">+ Add New Student</a>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Gmail</th>
+                        <th>Phone Number</th>
+                        <th>Course</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td><strong>{{ student.name }}</strong></td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.phone }}</td>
+                        <td>{{ student.course }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding:40px;">👨‍🎓 No students found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">Library Management System © 2026</div>
+
+</body>
+</html>

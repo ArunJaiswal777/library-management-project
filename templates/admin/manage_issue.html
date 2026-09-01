@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issued Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">📚 Library Management</div>
+
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+            <a href="/admin/books">📚 Books</a>
+            <a href="/admin/students">👨‍🎓 Students</a>
+            <a href="/admin/issue-book">📖 Issue Book</a>
+            <a href="/admin/issues" class="active">📋 Issues</a>
+            <a href="/chatbot">🤖 Chatbot</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Issued Books</h1>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Book</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                        <th>Fine</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for issue in issues %}
+                    <tr>
+                        <td>{{ issue.id }}</td>
+                        <td>{{ issue.student.name }}</td>
+                        <td>{{ issue.book.title }}</td>
+                        <td>{{ issue.issue_date }}</td>
+                        <td>{{ issue.due_date }}</td>
+                        <td>{{ issue.return_date or "Not Returned" }}</td>
+                        <td>
+                            <span class="status {% if issue.status == 'Issued' %}status-issued{% elif issue.status == 'Returned' %}status-returned{% else %}status-overdue{% endif %}">
+                                {{ issue.status }}
+                            </span>
+                        </td>
+                        <td>₹{{ issue.fine }}</td>
+                        <td>
+                            {% if issue.status == "Issued" %}
+                            <form method="POST" action="/admin/return-book/{{ issue.id }}">
+                                <button type="submit" class="btn btn-primary">Return</button>
+                            </form>
+                            {% else %}
+                            Returned
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9" style="text-align:center; padding:40px;">📖 No issue records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">Library Management System © 2026</div>
+
+</body>
+</html>

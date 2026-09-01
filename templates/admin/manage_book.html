@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Books</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172b4d;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            height: 70px;
+            background: #173f73;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 11px 15px;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            background: #285b98;
+        }
+
+        .nav-links .active {
+            background: #2f6fed;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 35px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        /* Table Card */
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #eef3f9;
+            color: #172b4d;
+            text-align: left;
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 16px;
+            border-top: 1px solid #e5e7eb;
+            color: #334155;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Available */
+        .available {
+            font-weight: bold;
+            color: #16803c;
+        }
+
+        /* Buttons */
+        .edit-btn {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            margin-right: 6px;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .add-btn {
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #15803d;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #64748b;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                height: auto;
+                padding: 15px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 20px;
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 900px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        📚 Library Management
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">
+            🏠 Home
+        </a>
+
+        <a href="/admin/books" class="active">
+            📚 Books
+        </a>
+
+        <a href="/admin/add-book">
+            ➕ Add Book
+        </a>
+
+        <a href="/admin/students">
+            👨‍🎓 Students
+        </a>
+
+        <a href="/admin/add-student">
+            ➕ Add Student
+        </a>
+
+        <a href="/admin/issue-book">
+            📖 Issue Book
+        </a>
+
+        <a href="/admin/issues">
+            📋 Issues
+        </a>
+
+        <a href="/chatbot">
+            🤖 Chatbot
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Manage Books</h1>
+
+            <p class="subtitle">
+                View, edit and manage all library books
+            </p>
+        </div>
+
+        <a href="/admin/add-book" class="add-btn">
+            + Add New Book
+        </a>
+
+    </div>
+
+
+    <!-- ================= BOOK TABLE ================= -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>ISBN</th>
+                    <th>Quantity</th>
+                    <th>Available</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for book in books %}
+
+                <tr>
+
+                    <td>{{ book.id }}</td>
+
+                    <td>
+                        <strong>{{ book.title }}</strong>
+                    </td>
+
+                    <td>{{ book.author }}</td>
+
+                    <td>{{ book.category }}</td>
+
+                    <td>{{ book.isbn }}</td>
+
+                    <td>{{ book.quantity }}</td>
+
+                    <td class="available">
+                        {{ book.available_quantity }}
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="/admin/book/edit/{{ book.id }}"
+                            class="edit-btn"
+                        >
+                            Edit
+                        </a>
+
+                        <form
+                            action="/admin/book/delete/{{ book.id }}"
+                            method="POST"
+                            style="display:inline;"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-btn"
+                                onclick="return confirm('Are you sure you want to delete this book?');"
+                            >
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="8" style="text-align:center; padding:40px;">
+                        📚 No books found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+    Library Management System © 2026
+</div>
+
+
+</body>
+</html>
